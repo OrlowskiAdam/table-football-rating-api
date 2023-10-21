@@ -1,0 +1,34 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+  servlet:
+    context-path: /api
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/table-football-db
+    username: testUser
+    password: testPassword
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 10000
+      maximum-pool-size: 10
+      idle-timeout: 5000
+      max-lifetime: 1000
+      auto-commit: true
+  flyway:
+    locations: classpath:db/migration
+    enabled: true
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: update
+
+app:
+  cors:
+    allowedOrigins: http://localhost:3000
+  jwtSecret: 9a02115a835ee03d5fb83cd8a468ea33e4090aaaec87f53c9fa54512bbef4db8dc656c82a315fa0c785c08b0134716b81ddcd0153d2a7556f2e154912cf5675f
+  jwtExpirationInMs: 86400000
