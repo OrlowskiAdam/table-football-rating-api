@@ -11,4 +11,6 @@ public interface UserService {
     List<User> getUsersByIds(Set<UUID> ids);
     User getUserByUsername(String username);
     User save(User user);
+
+    List<User> findAll();
 }

@@ -23,7 +23,7 @@ public class Pair {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @Size(max = 2)
     Set<User> users = new HashSet<>();
 

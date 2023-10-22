@@ -20,7 +20,6 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class EloRatingImpl implements RatingService {
-    private final PairRepository pairRepository;
     private final MatchRepository matchRepository;
     private static final int EXPECTED_SCORE_DIVIDER = 500;
     private static final int NEW_RATING_MULTIPLIER = 100;

@@ -28,11 +28,11 @@ public class Match {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Min(0)
-    @Max(3)
+    @Max(4)
     private Integer scoreA;
 
     @Min(0)
-    @Max(3)
+    @Max(4)
     private Integer scoreB;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -45,4 +45,7 @@ public class Match {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<MatchRatingDifference> matchRatingDifference;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<MatchUnitScore> unitScores;
 }

@@ -9,6 +9,7 @@ import pl.adamorlowski.tablefootballratingapi.dto.request.pair.CreatePairRequest
 import pl.adamorlowski.tablefootballratingapi.entity.Pair;
 import pl.adamorlowski.tablefootballratingapi.service.PairService;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,5 +29,11 @@ public class PairController {
     public ResponseEntity<Pair> getPair(@PathVariable("id") UUID id) {
         Pair pair = pairService.getPairById(id);
         return ResponseEntity.ok(pair);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Pair>> getPairs() {
+        List<Pair> pairs = pairService.getPairs();
+        return ResponseEntity.ok(pairs);
     }
 }

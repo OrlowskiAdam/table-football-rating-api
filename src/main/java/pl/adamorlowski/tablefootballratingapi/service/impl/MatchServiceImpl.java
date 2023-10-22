@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.adamorlowski.tablefootballratingapi.dto.request.match.MatchCreateRequestDto;
 import pl.adamorlowski.tablefootballratingapi.entity.match.Match;
 import pl.adamorlowski.tablefootballratingapi.entity.Pair;
+import pl.adamorlowski.tablefootballratingapi.entity.match.MatchUnitScore;
 import pl.adamorlowski.tablefootballratingapi.exception.ResourceNotFoundException;
 import pl.adamorlowski.tablefootballratingapi.repository.MatchRepository;
 import pl.adamorlowski.tablefootballratingapi.service.MatchService;
@@ -33,11 +34,16 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public Match createMatch(MatchCreateRequestDto matchCreateRequestDto) {
-        Pair pairA = pairService.getPairById(matchCreateRequestDto.getPairAId());
-        Pair pairB = pairService.getPairById(matchCreateRequestDto.getPairBId());
+    public Match createMatch(MatchCreateRequestDto matchCreateRequestDto, Pair pairA, Pair pairB) {
         int scoreA = matchCreateRequestDto.getScoreA();
         int scoreB = matchCreateRequestDto.getScoreB();
+        List<MatchUnitScore> unitScores = matchCreateRequestDto.getUnitScores()
+                .stream()
+                .map(unitScoreRq -> MatchUnitScore.builder()
+                        .scoreA(unitScoreRq.getScoreA())
+                        .scoreB(unitScoreRq.getScoreB())
+                        .build())
+                .toList();
         Match match = Match.builder()
                 .pairA(pairA)
                 .pairB(pairB)
@@ -45,6 +51,7 @@ public class MatchServiceImpl implements MatchService {
                 .scoreB(scoreB)
                 .createdAt(LocalDateTime.now())
                 .matchRatingDifference(new ArrayList<>())
+                .unitScores(new ArrayList<>(unitScores))
                 .build();
         return matchRepository.save(match);
     }

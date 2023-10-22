@@ -14,6 +14,7 @@ import pl.adamorlowski.tablefootballratingapi.service.UserService;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -28,7 +29,23 @@ public class PairServiceImpl implements PairService {
         List<User> users = userService.getUsersByIds(createPairRequestDto.getUserIds());
         if (users.size() != 2)
             throw new BadRequestException("Pair must have exactly 2 different users.");
-        // TODO: check if pair with given users already exists
+        if (this.pairExists(users))
+            throw new BadRequestException("Pair with given users already exists.");
+        Pair pair = Pair.builder()
+                .ratings(ratingServiceFacade.createInitialRatings())
+                .matches(new HashSet<>())
+                .users(new HashSet<>(users))
+                .build();
+        return pairRepository.save(pair);
+    }
+
+    @Override
+    public Pair createPair(Set<UUID> userIds) {
+        List<User> users = userService.getUsersByIds(userIds);
+        if (users.size() != 2)
+            throw new BadRequestException("Pair must have exactly 2 different users.");
+        if (this.pairExists(users))
+            return this.getPairByUsers(users);
         Pair pair = Pair.builder()
                 .ratings(ratingServiceFacade.createInitialRatings())
                 .matches(new HashSet<>())
@@ -44,6 +61,11 @@ public class PairServiceImpl implements PairService {
     }
 
     @Override
+    public List<Pair> getPairs() {
+        return pairRepository.findAll();
+    }
+
+    @Override
     public Pair save(Pair pair) {
         return pairRepository.save(pair);
     }
@@ -51,5 +73,35 @@ public class PairServiceImpl implements PairService {
     @Override
     public List<Pair> saveAll(List<Pair> pairs) {
         return pairRepository.saveAll(pairs);
+    }
+
+    @Override
+    public Pair getPairByUsers(List<User> users) {
+        List<Pair> pairs = pairRepository.findAll();
+        for (Pair pair : pairs) {
+            if (pair.getUsers().containsAll(users))
+                return pair;
+        }
+        throw new ResourceNotFoundException("Pair", "users", users);
+    }
+
+    @Override
+    public Pair getPairByUsers(Set<User> users) {
+        List<Pair> pairs = pairRepository.findAll();
+        for (Pair pair : pairs) {
+            if (pair.getUsers().containsAll(users))
+                return pair;
+        }
+        throw new ResourceNotFoundException("Pair", "users", users);
+    }
+
+    @Override
+    public boolean pairExists(List<User> users) {
+        List<Pair> pairs = pairRepository.findAll();
+        for (Pair pair : pairs) {
+            if (pair.getUsers().containsAll(users))
+                return true;
+        }
+        return false;
     }
 }
