@@ -6,7 +6,7 @@ import pl.adamorlowski.tablefootballratingapi.entity.User;
 import pl.adamorlowski.tablefootballratingapi.security.UserPrincipal;
 
 public interface AuthService {
-    String login(LoginRequestDto loginRequestDto);
-    User register(RegisterRequestDto registerRequestDto);
-    User getUserFromPrincipal(UserPrincipal userPrincipal);
+  String login(LoginRequestDto loginRequestDto);
+  User register(RegisterRequestDto registerRequestDto);
+  User getUserFromPrincipal(UserPrincipal userPrincipal);
 }

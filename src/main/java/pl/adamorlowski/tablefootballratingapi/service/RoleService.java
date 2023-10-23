@@ -4,5 +4,5 @@ import pl.adamorlowski.tablefootballratingapi.entity.Role;
 import pl.adamorlowski.tablefootballratingapi.entity.RoleName;
 
 public interface RoleService {
-    Role getRoleByName(RoleName name);
+  Role getRoleByName(RoleName name);
 }
