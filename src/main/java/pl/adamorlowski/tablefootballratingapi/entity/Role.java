@@ -12,11 +12,12 @@ import java.util.UUID;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "r_id")
     private UUID id;
 
     @Enumerated(EnumType.STRING)
     @NaturalId
-    @Column(length = 60)
+    @Column(length = 60, name = "r_name")
     private RoleName name;
 
 }

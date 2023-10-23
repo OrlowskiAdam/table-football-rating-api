@@ -1,28 +1,30 @@
 CREATE TABLE "users"
 (
-    id            UUID PRIMARY KEY,
-    nickname      VARCHAR NOT NULL,
-    name          VARCHAR NOT NULL,
-    username      VARCHAR NOT NULL,
-    password      VARCHAR NOT NULL,
-    CONSTRAINT user_username_unique UNIQUE (username),
-    CONSTRAINT user_nickname_unique UNIQUE (nickname)
+    u_id            UUID,
+    u_nickname      VARCHAR NOT NULL,
+    u_name          VARCHAR NOT NULL,
+    u_username      VARCHAR NOT NULL,
+    u_password      VARCHAR NOT NULL
 );
 
-CREATE INDEX idx_user_username ON "users" (username);
-CREATE INDEX idx_user_nickname ON "users" (nickname);
+ALTER TABLE "users" ADD CONSTRAINT TFRC_U_PK PRIMARY KEY(u_id);
+ALTER TABLE "users" ADD CONSTRAINT TFRC_U_USERNAME_UQ UNIQUE (u_username);
+ALTER TABLE "users" ADD CONSTRAINT TFRC_U_NICKNAME_UQ UNIQUE (u_nickname);
+
 
 CREATE TABLE roles
 (
-    id   UUID PRIMARY KEY,
-    name VARCHAR(60) NOT NULL
+    r_id UUID,
+    r_name VARCHAR(60) NOT NULL
 );
 
-CREATE INDEX idx_role_name ON roles (name);
+ALTER TABLE roles ADD CONSTRAINT TFRC_R_PK PRIMARY KEY(r_id);
+CREATE INDEX idx_r_name ON roles (r_name);
 
 CREATE TABLE user_roles
 (
-    user_id UUID NOT NULL,
-    role_id UUID NOT NULL,
-    PRIMARY KEY (user_id, role_id)
+    ur_u_id UUID NOT NULL,
+    ur_r_id UUID NOT NULL
 );
+
+ALTER TABLE user_roles ADD CONSTRAINT TFRC_UR_PK PRIMARY KEY(ur_u_id, ur_r_id);
