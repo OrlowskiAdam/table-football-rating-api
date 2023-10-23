@@ -1,4 +1,4 @@
-CREATE TABLE users
+CREATE TABLE "users"
 (
     id            UUID PRIMARY KEY,
     nickname      VARCHAR NOT NULL,
@@ -9,8 +9,8 @@ CREATE TABLE users
     CONSTRAINT user_nickname_unique UNIQUE (nickname)
 );
 
-CREATE INDEX idx_user_username ON users (username);
-CREATE INDEX idx_user_nickname ON users (nickname);
+CREATE INDEX idx_user_username ON "users" (username);
+CREATE INDEX idx_user_nickname ON "users" (nickname);
 
 CREATE TABLE roles
 (
