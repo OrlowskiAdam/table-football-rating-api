@@ -1,16 +1,14 @@
 package pl.adamorlowski.tablefootballratingapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,7 +17,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pairs {
+public class Pair {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "p_id")
@@ -37,5 +35,14 @@ public class Pairs {
     @NotBlank
     @Column(name = "p_name")
     private String name;
+
+    @OneToMany(mappedBy="pair1", cascade={CascadeType.ALL})
+    private List<Match> matches1 = new ArrayList<>();
+
+    @OneToMany(mappedBy="pair2", cascade={CascadeType.ALL})
+    private List<Match> matches2 = new ArrayList<>();
+
+    @OneToMany(mappedBy="pair", cascade={CascadeType.ALL})
+    private List<Rating> ratings = new ArrayList<>();
 
 }

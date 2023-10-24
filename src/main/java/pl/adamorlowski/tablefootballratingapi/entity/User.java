@@ -11,9 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "users")
@@ -55,8 +52,11 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy="user1", cascade={CascadeType.ALL})
-    private List<Pairs> pairs1 = new ArrayList<>();
+    private List<Pair> pair1 = new ArrayList<>();
 
     @OneToMany(mappedBy="user2", cascade={CascadeType.ALL})
-    private List<Pairs> pairs2 = new ArrayList<>();
+    private List<Pair> pair2 = new ArrayList<>();
+
+    @OneToMany(mappedBy="user", cascade={CascadeType.ALL})
+    private List<Rating> ratings = new ArrayList<>();
 }
