@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: table-football-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: table-football-db
+      POSTGRES_USER: testUser
+      POSTGRES_PASSWORD: testPassword
+    volumes:
+      - /path/to/data:/var/lib/postgresql/data
+    networks:
+      - table-football
+
+networks:
+  table-football:

@@ -35,4 +35,11 @@ public abstract class Rating {
 
     @Column(name = "ra_type", insertable = false, updatable = false)
     private String type;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "quarter")
+    private QuarterType quarter;
+
+    @Column(name = "year")
+    private Integer year;
 }
