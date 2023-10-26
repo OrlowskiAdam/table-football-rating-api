@@ -19,6 +19,7 @@ import pl.adamorlowski.tablefootballratingapi.repository.UserRepository;
 import pl.adamorlowski.tablefootballratingapi.security.JwtTokenProvider;
 import pl.adamorlowski.tablefootballratingapi.security.UserPrincipal;
 import pl.adamorlowski.tablefootballratingapi.service.AuthService;
+import pl.adamorlowski.tablefootballratingapi.service.RatingServiceFacade;
 import pl.adamorlowski.tablefootballratingapi.service.RoleService;
 import pl.adamorlowski.tablefootballratingapi.service.UserService;
 
@@ -28,6 +29,7 @@ public class AuthServiceImpl implements AuthService {
   private final UserRepository userRepository;
   private final RoleService roleService;
   private final UserService userService;
+  private final RatingServiceFacade ratingServiceFacade;
   private final PasswordEncoder passwordEncoder;
   private final AuthenticationManager authenticationManager;
   private final JwtTokenProvider tokenProvider;
@@ -68,6 +70,7 @@ public class AuthServiceImpl implements AuthService {
         .password(passwordEncoder.encode(registerRequestDto.getPassword()))
         .nickname(registerRequestDto.getNickname())
         .name(registerRequestDto.getName())
+        .ratings(ratingServiceFacade.createInitialRatings())
         .roles(new HashSet<>(Collections.singletonList(userRole)))
         .build();
     return userService.save(user);

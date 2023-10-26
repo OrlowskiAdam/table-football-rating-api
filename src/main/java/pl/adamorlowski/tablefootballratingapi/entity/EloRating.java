@@ -6,10 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
 @DiscriminatorValue(value="ELO_RATING")
-public class EloRating extends Rating{
+@SuperBuilder
+@NoArgsConstructor
+public class EloRating extends Rating {
 
 }

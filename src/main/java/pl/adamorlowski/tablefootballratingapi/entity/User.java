@@ -31,6 +31,7 @@ public class User {
 
     @NotBlank
     @Column(name = "u_name")
+    @JsonIgnore
     private String name;
 
     @NotBlank
@@ -44,6 +45,9 @@ public class User {
     @JsonIgnore
     @Column(name = "u_password")
     private String password;
+
+    @Transient
+    private String fullName;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -59,4 +63,8 @@ public class User {
 
     @OneToMany(mappedBy="user", cascade={CascadeType.ALL})
     private List<Rating> ratings = new ArrayList<>();
+
+    public String getFullName() {
+        return this.name + " \"" + this.nickname + "\"";
+    }
 }

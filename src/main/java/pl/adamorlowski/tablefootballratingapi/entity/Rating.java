@@ -22,11 +22,11 @@ public abstract class Rating {
     @Column(name = "ra_id")
     private UUID id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="ra_u_id")
     User user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="ra_p_id")
     Pair pair;
 
