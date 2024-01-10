@@ -5,8 +5,8 @@ CREATE TABLE ratings
     ra_p_id  UUID,
     ra_type  varchar(20),
     ra_value numeric(17, 6),
-    quarter  VARCHAR(2),
-    year     INTEGER
+    ra_quarter  VARCHAR(2),
+    ra_year     INTEGER
 );
 
 ALTER TABLE ratings

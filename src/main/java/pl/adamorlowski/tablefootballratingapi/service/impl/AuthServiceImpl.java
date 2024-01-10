@@ -73,6 +73,9 @@ public class AuthServiceImpl implements AuthService {
         .ratings(ratingServiceFacade.createInitialRatings())
         .roles(new HashSet<>(Collections.singletonList(userRole)))
         .build();
+
+    user.getRatings().forEach(r -> r.setUser(user));
+
     return userService.save(user);
   }
 }
